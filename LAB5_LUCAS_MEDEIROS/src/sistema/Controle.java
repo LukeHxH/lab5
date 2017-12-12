@@ -141,7 +141,13 @@ public class Controle {
         return cenarios.get(cenario - 1).getTodasApostas();
     }
     
-    // Em andamento...
+    /**
+     * Método para finalizar um cenário, fechando uma aposta.
+     * 
+     * @param cenario numeração do cenário a ser finalizado.
+     * @param ocorreu booleano que representa se o evento representado pelo
+     * cenário ocorreu na vida real.
+     */
     public void fecharAposta(int cenario, boolean ocorreu) {
         if (buscaCenario(cenario) != null) {
             Cenario c = cenarios.get(cenario -1);
@@ -154,6 +160,12 @@ public class Controle {
         }
     }
     
+    /**
+     * Método para retornar o caixa do cenário.
+     * 
+     * @param cenario numeração do cenário a ser pesquisado.
+     * @return o valor total, em centavos, do quanto que o caixa possui.
+     */
     public int getCaixaCenario(int cenario) {
         if (buscaCenario(cenario) == null)
             return 0;
@@ -161,7 +173,14 @@ public class Controle {
         return cenarios.get(cenario - 1).getCaixa();
     }
     
-    public int getTotalRateio(int cenario) {
+    /**
+     * Método para pegar o rateio total, que deve ser distribuído entre os
+     * vencedores.
+     * 
+     * @param cenario numeração do cenário a ser pesquisado.
+     * @return o valor total, em centavos, do rateio que será distribuído.
+     */
+    public int getTotalRateioCenario(int cenario) {
         if (buscaCenario(cenario) == null) 
             return 0;
         

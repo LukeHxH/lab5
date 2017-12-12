@@ -153,9 +153,8 @@ public class Cenario {
     public int valorApostadoPerdedores() {
         int soma = 0;
         for (Aposta a: apostas) {
-            if (!(a.ganhou())) {
+            if (!(a.ganhou()))
                 soma += a.getCentavosAposta();
-            }
         }
         return soma;
     }

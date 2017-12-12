@@ -110,8 +110,35 @@ public class Fachada {
         return controlador.exibeApostas(cenario);
     }
     
-    
+    /**
+     * Método para finalizar um cenário, fechando uma aposta.
+     * 
+     * @param cenario numeração do cenário a ser finalizado.
+     * @param ocorreu booleano que representa se o evento representado pelo
+     * cenário ocorreu na vida real.
+     */
     public void fecharAposta(int cenario, boolean ocorreu) {
         controlador.fecharAposta(cenario, ocorreu);
+    }
+    
+    /**
+     * Método para retornar o caixa do cenário.
+     * 
+     * @param cenario numeração do cenário a ser pesquisado.
+     * @return o valor total, em centavos, do quanto que o caixa possui.
+     */
+    public int getCaixaCenario(int cenario) {
+        return controlador.getCaixaCenario(cenario);
+    }
+    
+    /**
+     * Método para pegar o rateio total, que deve ser distribuído entre os
+     * vencedores.
+     * 
+     * @param cenario numeração do cenário a ser pesquisado.
+     * @return o valor total, em centavos, do rateio que será distribuído.
+     */
+    public int getTotalRateioCenario(int cenario) {
+        return controlador.getTotalRateioCenario(cenario);
     }
 }

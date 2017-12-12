@@ -150,7 +150,7 @@ public class Controle {
             
             c.definirValorCaixa(taxa);
             
-            this.caixa += (c.valorApostadoPerdedores() - c.getCaixa());
+            this.caixa += getCaixaCenario(cenario);
         }
     }
     
@@ -159,5 +159,14 @@ public class Controle {
             return 0;
         
         return cenarios.get(cenario - 1).getCaixa();
+    }
+    
+    public int getTotalRateio(int cenario) {
+        if (buscaCenario(cenario) == null) 
+            return 0;
+        
+        Cenario c = cenarios.get(cenario - 1);
+        
+        return (c.valorApostadoPerdedores() - c.getCaixa());
     }
 }

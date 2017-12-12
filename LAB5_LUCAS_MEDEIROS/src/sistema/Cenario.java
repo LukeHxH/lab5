@@ -60,21 +60,6 @@ public class Cenario {
     public int getCaixa() {
         return caixaCenario;
     }
-
-    /**
-     * Método para finalizar um cenário.
-     * 
-     * @param ocorreu booleano que representa se o evento representado pelo
-     * cenário se concretizou na vida real ou não.
-     */
-    public void finalizaCenario(boolean ocorreu) {
-        if (ocorreu)
-            this.status = "Finalizado (ocorreu)";
-        else
-            this.status = "Finalizado (n ocorreu)";
-        
-        defineGanhadores(ocorreu);
-    }
     
     /**
      * Método para adicionar uma aposta no conjunto de apostas de um cenário.
@@ -128,6 +113,21 @@ public class Cenario {
      */
     public int totalApostas() {
         return apostas.size();
+    }
+    
+    /**
+     * Método para finalizar um cenário.
+     * 
+     * @param ocorreu booleano que representa se o evento representado pelo
+     * cenário se concretizou na vida real ou não.
+     */
+    public void finalizaCenario(boolean ocorreu) {
+        if (ocorreu)
+            this.status = "Finalizado (ocorreu)";
+        else
+            this.status = "Finalizado (n ocorreu)";
+        
+        defineGanhadores(ocorreu);
     }
     
     /**

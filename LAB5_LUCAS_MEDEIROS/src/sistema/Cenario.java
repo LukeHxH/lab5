@@ -138,7 +138,7 @@ public class Cenario {
      */
     private void defineGanhadores(boolean ocorreu) {
         for (Aposta a: apostas) {
-            if (a.getPrevisao().trim().equals("VAI ACONTECER!"))
+            if (a.getPrevisao().trim().toUpperCase().equals("VAI ACONTECER!"))
                 a.setGanhou(ocorreu);
             else
                 a.setGanhou(!ocorreu);
@@ -166,7 +166,7 @@ public class Cenario {
      * @param taxa taxa do sistema.
      */
     public void definirValorCaixa(double taxa) {
-        this.caixaCenario = (int) Math.ceil(valorApostadoPerdedores() * taxa);
+        this.caixaCenario = (int) Math.floor(valorApostadoPerdedores() * taxa);
     }
 
     /**

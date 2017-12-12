@@ -22,12 +22,11 @@ public class Aposta {
         if (apostador == null || previsao == null)
             throw new NullPointerException("Dados não podem ser nulos.");
         
-        if (apostador.trim().isEmpty() || previsao.trim().isEmpty() ||
-                centavosAposta < 0)
+        if (apostador.trim().isEmpty() || centavosAposta <= 0)
             throw new IllegalArgumentException("Dado(s) inválido(s).");
         
-        if (!(previsao.trim().equals("VAI ACONTECER!") ||
-                previsao.trim().equals("NÃO VAI ACONTECER!")))
+        if (!(previsao.trim().toUpperCase().equals("VAI ACONTECER!") ||
+                previsao.trim().toUpperCase().equals("N VAI ACONTECER!")))
             throw new IllegalArgumentException("Previsão não válida!");
         
         this.apostador = apostador;

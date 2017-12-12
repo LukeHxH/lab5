@@ -136,7 +136,7 @@ public class Controle {
      */
     public String exibeApostas(int cenario) {
         if (buscaCenario(cenario) == null)
-            return "";
+            return null;
         
         return cenarios.get(cenario - 1).getTodasApostas();
     }
@@ -170,7 +170,12 @@ public class Controle {
         if (buscaCenario(cenario) == null)
             return 0;
         
-        return cenarios.get(cenario - 1).getCaixa();
+        Cenario c = cenarios.get(cenario - 1);
+        
+        if (c.getStatus().equals("Não finalizado"))
+            return 0;
+        
+        return c.getCaixa();
     }
     
     /**
@@ -185,6 +190,9 @@ public class Controle {
             return 0;
         
         Cenario c = cenarios.get(cenario - 1);
+        
+        if (c.getStatus().equals("Não finalizado"))
+            return 0;
         
         return (c.valorApostadoPerdedores() - c.getCaixa());
     }

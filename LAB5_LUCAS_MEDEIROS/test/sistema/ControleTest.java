@@ -221,11 +221,11 @@ public class ControleTest {
     @Test
     public void testFechaApostaTodoMundoAcertou() {
         Controle controle = new Controle(100000, 0.01);
-        controle.cadastraCenario("PUBG vai ganhar GOTY KKKKKKKKKKKKKKKKKKKKK.");
+        controle.cadastraCenario("PUBG vai ganhar GOTY.");
         controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer!");
         controle.cadastrarAposta(1, "Matheus", 1000, "n vai acontecer!");
         controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer!");
-        controle.cadastrarAposta(1, "Lucas", 698741, "n vai acontecer!");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer!");
         controle.fecharAposta(1, false);
         assertEquals(0, controle.getTotalRateioCenario(1));
         assertEquals(0, controle.getCaixaCenario(1));

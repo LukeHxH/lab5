@@ -19,15 +19,24 @@ public class Aposta {
      * @param centavosAposta valor, em centavos, da aposta.
      */
     public Aposta(String apostador, String previsao, int centavosAposta) {
-        if (apostador == null || previsao == null)
-            throw new NullPointerException("Dados não podem ser nulos.");
         
-        if (apostador.trim().isEmpty() || centavosAposta <= 0)
-            throw new IllegalArgumentException("Dado(s) inválido(s).");
+        if (apostador == null || apostador.trim().isEmpty())
+            throw new IllegalArgumentException("Erro no cadastro de aposta: "
+                    + "Apostador nao pode ser vazio ou nulo");
         
-        if (!(previsao.trim().toUpperCase().equals("VAI ACONTECER!") ||
-                previsao.trim().toUpperCase().equals("N VAI ACONTECER!")))
-            throw new IllegalArgumentException("Previsão não válida!");
+        if (centavosAposta <= 0)
+            throw new IllegalArgumentException("Erro no cadastro de aposta: "
+                    + "Valor nao pode ser menor ou igual a zero");
+        
+        if (previsao == null || previsao.trim().isEmpty())
+            throw new IllegalArgumentException("Erro no cadastro de aposta: "
+                    + "Previsao nao pode ser vazia ou nula");
+        
+        
+        if (!(previsao.trim().toUpperCase().equals("VAI ACONTECER") ||
+                previsao.trim().toUpperCase().equals("N VAI ACONTECER")))
+            throw new IllegalArgumentException("Erro no cadastro de aposta: "
+                    + "Previsao invalida");
         
         this.apostador = apostador;
         this.previsao = previsao;

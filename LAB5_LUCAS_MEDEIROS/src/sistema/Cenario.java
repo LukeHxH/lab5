@@ -21,15 +21,13 @@ public class Cenario {
      * @param descricao descricao do cenário.
      */
     public Cenario(int numeracao, String descricao) {
-        if (descricao == null)
-            throw new NullPointerException("Descrição não pode ser nula.");
-        
         if (descricao.trim().isEmpty())
-            throw new IllegalArgumentException("Descrição inválida.");
+            throw new IllegalArgumentException("Erro no cadastro de cenario: "
+                    + "Descricao nao pode ser vazia");
         
         this.descricao = descricao;
         this.numeracao = numeracao;
-        this.status = "Não finalizado";
+        this.status = "Nao finalizado";
         this.apostas = new HashSet<>();
         this.caixaCenario = 0;
     }
@@ -138,7 +136,7 @@ public class Cenario {
      */
     private void defineGanhadores(boolean ocorreu) {
         for (Aposta a: apostas) {
-            if (a.getPrevisao().trim().toUpperCase().equals("VAI ACONTECER!"))
+            if (a.getPrevisao().trim().toUpperCase().equals("VAI ACONTECER"))
                 a.setGanhou(ocorreu);
             else
                 a.setGanhou(!ocorreu);

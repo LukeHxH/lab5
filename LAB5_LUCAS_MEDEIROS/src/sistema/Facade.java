@@ -1,21 +1,30 @@
 package sistema;
 
+import easyaccept.EasyAccept;
+
 /**
  * Representação da fachada do sistema.
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */
-public class Fachada {
+public class Facade {
     
     private Controle controlador;
     
     /**
-     * Construtor de Fachada.
+     * Método para o teste de aceitação.
+     * 
+     * @param args string com argumentos para o EasyAccept.
      */
-    public Fachada(){}
+    public static void main(String[] args) {
+        args = new String[] {"sistema.Facade", "acceptance_tests/us1_test.txt",
+        "acceptance_tests/us2_test.txt", "acceptance_tests/us3_test.txt",
+        "acceptance_tests/us4_test.txt"};
+        EasyAccept.main(args);
+    }
     
     /**
-     * Inicializador do sistema.
+     * Inicializador do sistema, criando o controlador.
      * 
      * @param caixa o valor de caixa inicial.
      * @param taxa o valor da taxa inicial.
@@ -40,7 +49,7 @@ public class Fachada {
      * @return numeração do novo cenário cadastrado, <tt>-1</tt> se não foi 
      * possível cadastrar.
      */
-    public int cadastraCenario(String descricao) {
+    public int cadastrarCenario(String descricao) {
         return controlador.cadastraCenario(descricao);
     }
     
@@ -74,7 +83,7 @@ public class Fachada {
      * @return <tt>true</tt> se foi a aposta foi devidamente cadastrada no
      * sistema.
      */
-    public boolean cadastraAposta(int cenario, String apostador, int valor,
+    public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao) {
         return controlador.cadastrarAposta(cenario, apostador, valor, previsao);
     }

@@ -48,7 +48,7 @@ public class ControleTest {
         assertEquals(2, dois);
     }
     
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testBuscaCenario1() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
@@ -70,7 +70,7 @@ public class ControleTest {
         controle.cadastraCenario("Todos os alunos vão passar por média.");
         controle.cadastraCenario("Lucas vai beber mais de 3 litros de água.");
         assertEquals("2 - Lucas vai beber mais de 3 litros de água. "
-                + "- Não finalizado" , controle.buscaCenario(2));
+                + "- Nao finalizado" , controle.buscaCenario(2));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ControleTest {
         controle.fecharAposta(2, true);
         controle.fecharAposta(3, false);
         assertEquals("Cenários: \n"
-                + "1 - Todos os alunos vão passar por média. - Não finalizado\n"
+                + "1 - Todos os alunos vão passar por média. - Nao finalizado\n"
                 + "2 - Nenhum aluno vai passar por média. - Finalizado (ocorreu)"
                 + "\n3 - Vão cantar alo alo marciano. - Finalizado (n ocorreu)\n"
                 , controle.todosCenarios());
@@ -98,17 +98,17 @@ public class ControleTest {
     public void testCadastrarApostaCenarioNaoExiste() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(0, "Lucas", 9000, "vai acontecer!");
+        controle.cadastrarAposta(2, "Lucas", 9000, "vai acontecer");
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCadastrarAposta1() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(1, null, 9000, "vai acontecer!");
+        controle.cadastrarAposta(1, null, 9000, "vai acontecer");
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCadastrarAposta2() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
@@ -119,7 +119,7 @@ public class ControleTest {
     public void testCadastrarAposta3() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(1, "Lucas", 0, "vai acontecer!");
+        controle.cadastrarAposta(1, "Lucas", 0, "vai acontecer");
     }
     
     @Test(expected = IllegalArgumentException.class)
@@ -133,31 +133,31 @@ public class ControleTest {
     public void testCadastrarAposta5() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(1, "    ", 10, "vai acontecer!");
+        controle.cadastrarAposta(1, "    ", 10, "vai acontecer");
     }
     
     @Test
     public void testCadastrarAposta6() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        assertTrue(controle.cadastrarAposta(1, "Lucas", 10, "n vai acontecer!"));
+        assertTrue(controle.cadastrarAposta(1, "Lucas", 10, "n vai acontecer"));
     }
     
     @Test
     public void testCadastrarAposta7() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        assertTrue(controle.cadastrarAposta(1, "Lucas", 10, "vai acontecer!"));
+        assertTrue(controle.cadastrarAposta(1, "Lucas", 10, "vai acontecer"));
     }
     
     @Test
     public void testValorTotalApostas1() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer!");
-        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer!");
-        controle.cadastrarAposta(1, "Lucas", 200, "vai acontecer!");
-        controle.cadastrarAposta(1, "Matheus", 200, "n vai acontecer!");
+        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 200, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 200, "n vai acontecer");
         assertEquals(1400, controle.valorTotalDeApostas(1));
     }
     
@@ -168,7 +168,7 @@ public class ControleTest {
         assertEquals(0, controle.valorTotalDeApostas(1));
     }
     
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testValorTotalApostas3() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
@@ -182,7 +182,7 @@ public class ControleTest {
         assertEquals(0, controle.qtdApostas(1));
     }
     
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testQtdApostas2() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
@@ -193,10 +193,10 @@ public class ControleTest {
     public void testQtdApostas3() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer!");
-        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer!");
-        controle.cadastrarAposta(1, "Lucas", 200, "vai acontecer!");
-        controle.cadastrarAposta(1, "Matheus", 200, "n vai acontecer!");
+        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 200, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 200, "n vai acontecer");
         assertEquals(4, controle.qtdApostas(1));
     }
     
@@ -204,17 +204,17 @@ public class ControleTest {
     public void exibeApostas1() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer!");
-        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer!");
+        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer");
         assertNotNull(controle.exibeApostas(1));
     }
     
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void exibeApostas2() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer!");
-        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer!");
+        controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer");
         controle.exibeApostas(0);
     }
     
@@ -222,10 +222,10 @@ public class ControleTest {
     public void testFechaApostaTodoMundoAcertou() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
-        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer!");
-        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer!");
-        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer!");
-        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer!");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
         controle.fecharAposta(1, false);
         assertEquals(0, controle.getTotalRateioCenario(1));
         assertEquals(0, controle.getCaixaCenario(1));
@@ -235,9 +235,9 @@ public class ControleTest {
     public void testFechaApostaTodoMundoErrou() {
         Controle controle = new Controle(100000, 0.05);
         controle.cadastraCenario("Hollow Knight vai ganhar melhor jogo indie.");
-        controle.cadastrarAposta(1, "Matheus", 1000, "vai acontecer!");
-        controle.cadastrarAposta(1, "Pablo", 690, "vai acontecer!");
-        controle.cadastrarAposta(1, "Grace VanderWaal", 698, "vai acontecer!");
+        controle.cadastrarAposta(1, "Matheus", 1000, "vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "vai acontecer");
+        controle.cadastrarAposta(1, "Grace VanderWaal", 698, "vai acontecer");
         controle.fecharAposta(1, false);
         assertEquals(2269, controle.getTotalRateioCenario(1));
         assertEquals(119, controle.getCaixaCenario(1));

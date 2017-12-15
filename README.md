@@ -20,6 +20,6 @@ Funcionalidades:
 - Cadastrar e listar cenários (100%)
 - Cadastrar e listar apostas (100%)
 - Fechar apostas e concretizar cenário (100%)
-- Testes unitários (100%)
-- Testes de aceitação (100%)
+- Testes unitários (100%) - JUnit
+- Testes de aceitação (100%) - Utilizando o EasyAccept
 - Diagrama de classes (100%)

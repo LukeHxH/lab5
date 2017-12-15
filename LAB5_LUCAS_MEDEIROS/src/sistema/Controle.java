@@ -1,6 +1,7 @@
 package sistema;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * Representação da classe controladora do sistema.
@@ -65,7 +66,7 @@ public class Controle {
                 return c.toString();
             }
         }
-        return null;
+        throw new NoSuchElementException();
     }
     
     /**
@@ -94,8 +95,7 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao) {
-        if (buscaCenario(cenario) == null)
-            return false;
+        buscaCenario(cenario);
         
         return cenarios.get(cenario - 1).
                 adicionaAposta(apostador, previsao, valor);
@@ -109,8 +109,7 @@ public class Controle {
      * @return valor monetário, em centavos, total apostado em um cenário.
      */
     public int valorTotalDeApostas(int cenario) {
-        if (buscaCenario(cenario) == null)
-            return 0;
+        buscaCenario(cenario);
         
         return cenarios.get(cenario - 1).valorTotalApostas();
     }
@@ -122,8 +121,7 @@ public class Controle {
      * @return quantidade de apostas feitas em um cenário.
      */
     public int qtdApostas(int cenario) {
-        if (buscaCenario(cenario) == null)
-            return 0;
+        buscaCenario(cenario);
         
         return cenarios.get(cenario - 1).totalApostas();
     }
@@ -135,8 +133,7 @@ public class Controle {
      * @return a representação em string das apostas feitas em um cenário.
      */
     public String exibeApostas(int cenario) {
-        if (buscaCenario(cenario) == null)
-            return null;
+        buscaCenario(cenario);
         
         return cenarios.get(cenario - 1).getTodasApostas();
     }
@@ -167,15 +164,16 @@ public class Controle {
      * @return o valor total, em centavos, do quanto que o caixa possui.
      */
     public int getCaixaCenario(int cenario) {
-        if (buscaCenario(cenario) == null)
-            return 0;
+        int caixaCenario = 0;
+        if (buscaCenario(cenario) != null){
+            Cenario c = cenarios.get(cenario - 1);
+
+            if (!(c.getStatus().equals("Não finalizado")))
+                caixaCenario = c.getCaixa();
+        }
+            
         
-        Cenario c = cenarios.get(cenario - 1);
-        
-        if (c.getStatus().equals("Não finalizado"))
-            return 0;
-        
-        return c.getCaixa();
+        return caixaCenario;
     }
     
     /**
@@ -186,14 +184,15 @@ public class Controle {
      * @return o valor total, em centavos, do rateio que será distribuído.
      */
     public int getTotalRateioCenario(int cenario) {
-        if (buscaCenario(cenario) == null) 
-            return 0;
+        int totalRateio = 0;
+        if (buscaCenario(cenario) != null) {
         
-        Cenario c = cenarios.get(cenario - 1);
+            Cenario c = cenarios.get(cenario - 1);
+
+            if (!(c.getStatus().equals("Não finalizado")))
+                totalRateio = (c.valorApostadoPerdedores() - c.getCaixa());
+        }
         
-        if (c.getStatus().equals("Não finalizado"))
-            return 0;
-        
-        return (c.valorApostadoPerdedores() - c.getCaixa());
+        return totalRateio;
     }
 }

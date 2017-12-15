@@ -1,5 +1,6 @@
 package sistema;
 
+import java.util.NoSuchElementException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -47,20 +48,20 @@ public class ControleTest {
         assertEquals(2, dois);
     }
     
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testBuscaCenario1() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
         controle.cadastraCenario("Lucas vai beber mais de 3 litros de água.");
-        assertEquals(null, controle.buscaCenario(0));
+        controle.buscaCenario(0);
     }
     
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testBuscaCenario2() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
         controle.cadastraCenario("Lucas vai beber mais de 3 litros de água.");
-        assertEquals(null, controle.buscaCenario(3));
+        controle.buscaCenario(3);
     }
     
     @Test
@@ -93,12 +94,11 @@ public class ControleTest {
                 , controle.todosCenarios());
     }
     
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testCadastrarApostaCenarioNaoExiste() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        assertFalse(controle.cadastrarAposta
-                        (0, "Lucas", 9000, "vai acontecer!"));
+        controle.cadastrarAposta(0, "Lucas", 9000, "vai acontecer!");
     }
     
     @Test(expected = NullPointerException.class)
@@ -168,11 +168,11 @@ public class ControleTest {
         assertEquals(0, controle.valorTotalDeApostas(1));
     }
     
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testValorTotalApostas3() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        assertEquals(0, controle.valorTotalDeApostas(0));
+        controle.valorTotalDeApostas(0);
     }
     
     @Test
@@ -182,11 +182,11 @@ public class ControleTest {
         assertEquals(0, controle.qtdApostas(1));
     }
     
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testQtdApostas2() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
-        assertEquals(0, controle.qtdApostas(0));
+        controle.qtdApostas(0);
     }
     
     @Test
@@ -209,21 +209,21 @@ public class ControleTest {
         assertNotNull(controle.exibeApostas(1));
     }
     
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void exibeApostas2() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario("Todos os alunos vão passar por média.");
         controle.cadastrarAposta(1, "Lucas", 900, "vai acontecer!");
         controle.cadastrarAposta(1, "Matheus", 100, "n vai acontecer!");
-        assertNull(controle.exibeApostas(0));
+        controle.exibeApostas(0);
     }
     
     @Test
     public void testFechaApostaTodoMundoAcertou() {
         Controle controle = new Controle(100000, 0.01);
-        controle.cadastraCenario("PUBG vai ganhar GOTY.");
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
         controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer!");
-        controle.cadastrarAposta(1, "Matheus", 1000, "n vai acontecer!");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer!");
         controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer!");
         controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer!");
         controle.fecharAposta(1, false);

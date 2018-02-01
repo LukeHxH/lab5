@@ -13,6 +13,7 @@ public class Cenario {
     private String status;
     private HashSet<Aposta> apostas;
     private int caixaCenario;
+    private int bonus;
 
     /**
      * Construtor de Cenario.
@@ -21,6 +22,10 @@ public class Cenario {
      * @param descricao descricao do cenário.
      */
     public Cenario(int numeracao, String descricao) {
+        this(numeracao, descricao, 0);
+    }
+    
+    public Cenario(int numeracao, String descricao, int bonus) {
         if (descricao.trim().isEmpty())
             throw new IllegalArgumentException("Erro no cadastro de cenario: "
                     + "Descricao nao pode ser vazia");
@@ -30,6 +35,7 @@ public class Cenario {
         this.status = "Nao finalizado";
         this.apostas = new HashSet<>();
         this.caixaCenario = 0;
+        this.bonus = bonus;
     }
 
     /**
@@ -57,6 +63,15 @@ public class Cenario {
      */
     public int getCaixa() {
         return caixaCenario;
+    }
+
+    /**
+     * Método acessório do bônus do cenário.
+     * 
+     * @return valor em centavos do bonus que o cenario possui.
+     */
+    public int getBonus() {
+        return bonus;
     }
     
     /**

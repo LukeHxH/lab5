@@ -54,6 +54,18 @@ public class Facade {
     }
     
     /**
+     * Método para cadastrar um novo cenário com bonus.
+     * 
+     * @param descricao descrição do cenário cadastrado.
+     * @param bonus valor do bonus a ser aplicado ao cenário.
+     * @return numeração do novo cenário cadastrado, <tt>-1</tt> se não foi 
+     * possível cadastrar.
+     */
+    public int cadastrarCenario(String descricao, int bonus) {
+        return controlador.cadastraCenario(descricao, bonus);
+    }
+    
+    /**
      * Método para buscar um cenário já cadastrado no sistema.
      * 
      * @param numeracao numeração do cenário a ser pesquisado.

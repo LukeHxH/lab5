@@ -58,6 +58,18 @@ public class Controle {
     }
     
     /**
+     * Método para cadastrar um novo cenário com bonus.
+     * 
+     * @param descricao descrição do cenário cadastrado.
+     * @param bonus valor do bonus a ser aplicado ao cenário.
+     * @return numeração do novo cenário cadastrado, <tt>-1</tt> se não foi 
+     * possível cadastrar.
+     */
+    public int cadastraCenario(String descricao, int bonus) {
+        return -1;
+    }
+    
+    /**
      * Método para buscar um cenário já cadastrado no sistema.
      * 
      * @param cenario numeração do cenário a ser pesquisado.

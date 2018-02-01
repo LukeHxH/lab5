@@ -12,7 +12,8 @@ public class Cenario {
     private String descricao;
     private String status;
     private HashSet<Aposta> apostas;
-    private int caixaCenario;
+    
+    protected int caixaCenario;
     
     /**
      * Construtor de Cenario.
@@ -30,6 +31,15 @@ public class Cenario {
         this.status = "Nao finalizado";
         this.apostas = new HashSet<>();
         this.caixaCenario = 0;
+    }
+
+    /**
+     * Método acessório da descrição de um cenário.
+     * 
+     * @return descrição do cenário.
+     */
+    public String getDescricao() {
+        return descricao;
     }
 
     /**

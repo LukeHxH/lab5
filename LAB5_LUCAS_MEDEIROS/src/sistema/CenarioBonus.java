@@ -1,8 +1,9 @@
 package sistema;
 
 /**
- *
- * @author lucasmnf
+ * Representação de um cenário com bônus.
+ * 
+ * @author Lucas de Medeiros Nunes Fernandes
  */
 public class CenarioBonus extends Cenario{
     
@@ -13,9 +14,21 @@ public class CenarioBonus extends Cenario{
         
         if (bonus <= 0)
             throw new IllegalArgumentException("Erro no cadastro de cenario: "
-                    + "Bonus invalido.");
+                    + "Bonus deve ser maior que 0.");
         
         this.bonus = bonus;
     }
+    
+    public void colocaBonusCaixa() {
+        caixaCenario += bonus;
+    }
+
+    @Override
+    public String toString() {
+        String valorReais = String.format("%,.2f", bonus / 100.0);
+        return getNumeracao() + " - " + getDescricao() + " - " + getStatus() 
+                + " - R$ " + valorReais;
+    }
+    
     
 }

@@ -36,8 +36,8 @@ public class ControleTest {
         controle.cadastraCenario("");
     }
     
-    @Test()
-    public void testCadastraCenario() {
+    @Test
+    public void testCadastraCenario1() {
         Controle controle = new Controle(100000, 0.01);
         
         controle.cadastraCenario("Todos os alunos vão passar por média.");
@@ -46,6 +46,26 @@ public class ControleTest {
         controle.cadastraCenario("Lucas vai beber mais de 3 litros de água.");
                         
         assertEquals(2, dois);
+    }
+    
+    @Test
+    public void testCadastraCenario2() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("Lucas vai beber mais de 3 litros de água.");
+                        
+        assertEquals("1 - Lucas vai beber mais de 3 litros de água. - Nao "
+                + "finalizado", controle.buscaCenario(1));
+    }
+    
+    @Test
+    public void testCadastraCenarioBonus() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("O dado vai tirar mais que 3", 10000);
+        
+        assertEquals("1 - O dado vai tirar mais que 3 - Nao finalizado - "
+                + "R$ 100,00", controle.buscaCenario(1));
     }
     
     @Test(expected = IllegalArgumentException.class)

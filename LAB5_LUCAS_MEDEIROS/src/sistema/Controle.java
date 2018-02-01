@@ -65,10 +65,17 @@ public class Controle {
      * @return numeração do novo cenário cadastrado, <tt>-1</tt> se não foi 
      * possível cadastrar.
      */
-    public int cadastraCenario(String descricao, int bonus) {;
+    public int cadastraCenario(String descricao, int bonus) {
         int numeracao = (cenarios.size() + 1);
-        if (cenarios.add(new CenarioBonus(numeracao, descricao, bonus)))
+        
+        CenarioBonus cenarioBonus = new CenarioBonus(numeracao, descricao, bonus);
+        
+        if (cenarios.add(cenarioBonus)){
+            caixa -= bonus;
+            cenarioBonus.colocaBonusCaixa();
+            
             return numeracao;
+        }
         
         return -1;
     }
@@ -220,7 +227,7 @@ public class Controle {
 
         c.definirValorCaixa(taxa);
 
-        this.caixa += getCaixaCenario(cenario);
+        caixa += getCaixaCenario(cenario);
     }
     
     /**

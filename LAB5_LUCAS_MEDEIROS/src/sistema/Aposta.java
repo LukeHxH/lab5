@@ -1,7 +1,7 @@
 package sistema;
 
 /**
- * Representação de uma aposta feita no sistema.
+ * Representação de uma aposta sem seguro feita no sistema.
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */
@@ -10,6 +10,7 @@ public class Aposta {
     private String previsao;
     private int centavosAposta;
     private boolean ganhou;
+    private ApostaSegura seguro;
 
     /**
      * Construtor de Aposta.
@@ -19,7 +20,11 @@ public class Aposta {
      * @param centavosAposta valor, em centavos, da aposta.
      */
     public Aposta(String apostador, String previsao, int centavosAposta) {
-        
+        this(apostador, previsao, centavosAposta, null);
+    }
+    
+    public Aposta(String apostador, String previsao, int centavosAposta, 
+            ApostaSegura seguro) {
         if (apostador == null || apostador.trim().isEmpty())
             throw new IllegalArgumentException("Erro no cadastro de aposta: "
                     + "Apostador nao pode ser vazio ou nulo");
@@ -88,6 +93,13 @@ public class Aposta {
      */
     public void setGanhou(boolean ganhou) {
         this.ganhou = ganhou;
+    }
+    
+    public int perderAposta() {
+        if (seguro == null) 
+            return 0;
+        
+        return seguro.perderAposta(centavosAposta);
     }
 
     /**

@@ -143,6 +143,68 @@ public class Controle {
     }
     
     /**
+     * Método para cadastrar uma nova aposta assegurada por valor.
+     * 
+     * @param cenario numeração do cenário a se cadastrar a aposta;.
+     * @param apostador nome do apostador.
+     * @param valor valor em centavos da aposta.
+     * @param previsao previsão do apostador sobre o fim do cenário.
+     * @param valorSeguro valor a ser assegurado.
+     * @param custo custo do seguro.
+     * @return <tt>true</tt> se foi a aposta foi devidamente cadastrada no
+     * sistema.
+     */
+    public boolean cadastrarAposta(int cenario, String apostador, int valor,
+            String previsao, int valorSeguro, int custo) {
+        try {
+            buscaCenario(cenario);
+        } catch (NoSuchElementException nsee) {
+            throw new NoSuchElementException("Erro no cadastro de aposta: "
+                    + "Cenario nao cadastrado");
+            
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalArgumentException("Erro no cadastro de aposta: "
+                    + "Cenario invalido");
+        }
+        
+        caixa += custo;
+        
+        return cenarios.get(cenario - 1).
+                adicionaAposta(apostador, previsao, valor, valorSeguro);
+    }
+    
+    /**
+     * Método para cadastrar uma nova aposta assegurada por valor.
+     * 
+     * @param cenario numeração do cenário a se cadastrar a aposta;.
+     * @param apostador nome do apostador.
+     * @param valor valor em centavos da aposta.
+     * @param previsao previsão do apostador sobre o fim do cenário.
+     * @param taxaSeguro taxa a ser assegurada.
+     * @param custo custo do seguro.
+     * @return <tt>true</tt> se foi a aposta foi devidamente cadastrada no
+     * sistema.
+     */
+    public boolean cadastrarAposta(int cenario, String apostador, int valor,
+            String previsao, double taxaSeguro, int custo) {
+        try {
+            buscaCenario(cenario);
+        } catch (NoSuchElementException nsee) {
+            throw new NoSuchElementException("Erro no cadastro de aposta: "
+                    + "Cenario nao cadastrado");
+            
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalArgumentException("Erro no cadastro de aposta: "
+                    + "Cenario invalido");
+        }
+        
+        caixa += custo;
+        
+        return cenarios.get(cenario - 1).
+                adicionaAposta(apostador, previsao, valor, taxaSeguro);
+    }
+    
+    /**
      * Método para mostrar, em centavos, quanto dinheiro foi apostado em um
      * cenário.
      * 

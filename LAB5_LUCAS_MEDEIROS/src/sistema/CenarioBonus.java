@@ -30,8 +30,4 @@ public class CenarioBonus extends Cenario{
     public int totalRateio() {
         return super.totalRateio() + bonus;
     }
-
-    
-    
-    
 }

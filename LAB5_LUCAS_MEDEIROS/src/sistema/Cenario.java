@@ -83,6 +83,38 @@ public class Cenario {
     }
     
     /**
+     * Método para adicionar uma aposta assegurada por valor no conjunto de
+     * apostas de um cenário.
+     * 
+     * @param apostador nome do apostador.
+     * @param aposta previsão de aposta.
+     * @param valor valor em centavos da aposta.
+     * @param valorSeguro valor a ser assegurado.
+     * @return 
+     */
+    public boolean adicionaAposta(String apostador, String aposta, int valor,
+            int valorSeguro) {
+        
+        return true;
+    }
+    
+    /**
+     * Método para adicionar uma aposta assegurada por valor no conjunto de
+     * apostas de um cenário.
+     * 
+     * @param apostador nome do apostador.
+     * @param aposta previsão de aposta.
+     * @param valor valor em centavos da aposta.
+     * @param taxaSeguro taxa a ser assegurada.
+     * @return 
+     */
+    public boolean adicionaAposta(String apostador, String aposta, int valor,
+            double taxaSeguro) {
+        
+        return true;
+    }
+    
+    /**
      * Método para mostrar, em centavos, quanto dinheiro foi apostado em um
      * cenário.
      * 
@@ -130,9 +162,9 @@ public class Cenario {
      */
     public void finalizaCenario(boolean ocorreu) {
         if (ocorreu)
-            this.status = "Finalizado (ocorreu)";
+            status = "Finalizado (ocorreu)";
         else
-            this.status = "Finalizado (n ocorreu)";
+            status = "Finalizado (n ocorreu)";
         
         defineGanhadores(ocorreu);
     }
@@ -173,7 +205,7 @@ public class Cenario {
      * @param taxa taxa do sistema.
      */
     public void definirValorCaixa(double taxa) {
-        this.caixaCenario = (int) Math.floor(valorApostadoPerdedores() * taxa);
+        caixaCenario = (int) Math.floor(valorApostadoPerdedores() * taxa);
     }
     
     /**
@@ -204,7 +236,7 @@ public class Cenario {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 17 * hash + this.numeracao;
+        hash = 17 * hash + numeracao;
         return hash;
     }
 
@@ -225,7 +257,7 @@ public class Cenario {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Cenario other = (Cenario) obj;
-        return this.numeracao == other.numeracao;
+        final Cenario otherCenario = (Cenario) obj;
+        return numeracao == otherCenario.numeracao;
     }    
 }

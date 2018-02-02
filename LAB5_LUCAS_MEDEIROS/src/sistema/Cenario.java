@@ -8,12 +8,11 @@ import java.util.HashSet;
  * @author Lucas de Medeiros Nunes Fernandes
  */
 public class Cenario {
-    private int numeracao;
+    private final int numeracao;
     private String descricao;
     private String status;
+    private int caixaCenario;
     private HashSet<Aposta> apostas;
-    
-    protected int caixaCenario;
     
     /**
      * Construtor de Cenario.
@@ -175,6 +174,15 @@ public class Cenario {
      */
     public void definirValorCaixa(double taxa) {
         this.caixaCenario = (int) Math.floor(valorApostadoPerdedores() * taxa);
+    }
+    
+    /**
+     * Método para definir o valor a ser repassado para os vencedores.
+     * 
+     * @return valor em centavos para as apostas vencedoras.
+     */
+    public int totalRateio() {
+        return (valorApostadoPerdedores() - caixaCenario);
     }
 
     /**

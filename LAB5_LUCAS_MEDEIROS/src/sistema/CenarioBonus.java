@@ -18,10 +18,6 @@ public class CenarioBonus extends Cenario{
         
         this.bonus = bonus;
     }
-    
-    public void colocaBonusCaixa() {
-        caixaCenario += bonus;
-    }
 
     @Override
     public String toString() {
@@ -29,6 +25,13 @@ public class CenarioBonus extends Cenario{
         return getNumeracao() + " - " + getDescricao() + " - " + getStatus() 
                 + " - R$ " + valorReais;
     }
+
+    @Override
+    public int totalRateio() {
+        return super.totalRateio() + bonus;
+    }
+
+    
     
     
 }

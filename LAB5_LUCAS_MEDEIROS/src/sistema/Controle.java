@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 /**
- * Representação da classe controladora do sistema.
+ * Representação da classe que controla o sistema.
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */
@@ -72,7 +72,6 @@ public class Controle {
         
         if (cenarios.add(cenarioBonus)){
             caixa -= bonus;
-            cenarioBonus.colocaBonusCaixa();
             
             return numeracao;
         }
@@ -282,6 +281,6 @@ public class Controle {
             throw new IllegalArgumentException("Erro na consulta do total de "
                     + "rateio do cenario: Cenario ainda esta aberto");
         
-        return (c.valorApostadoPerdedores() - c.getCaixa());
+        return (c.totalRateio());
     }
 }

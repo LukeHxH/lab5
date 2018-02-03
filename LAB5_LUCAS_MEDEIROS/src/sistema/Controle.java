@@ -20,13 +20,11 @@ public class Controle {
      * @param taxa o valor da taxa inicial.
      */
     public Controle(int caixa, double taxa) {
-        if (caixa < 0)
-            throw new IllegalArgumentException("Erro na inicializacao: Caixa "
-                    + "nao pode ser inferior a 0");
+        Validacoes.validaNumeroMenorZero(caixa, "Erro na inicializacao: Caixa "
+                + "nao pode ser inferior a 0");
         
-        if (taxa < 0)
-            throw new IllegalArgumentException("Erro na inicializacao: Taxa nao"
-                    + " pode ser inferior a 0");
+        Validacoes.validaNumeroMenorZero(taxa, "Erro na inicializacao: Taxa nao"
+                + " pode ser inferior a 0");
         
         this.caixa = caixa;
         this.taxa = taxa;
@@ -87,9 +85,20 @@ public class Controle {
      * cenário cadastrado com essa numeração.
      */
     public String buscaCenario(int cenario) {
-        if (cenario <= 0)
-            throw new IllegalArgumentException("Erro na consulta de cenario: "
-                    + "Cenario invalido");
+        return validaCenario(cenario, "na consulta de cenario");
+    }
+    
+    /**
+     * Método para fazer verificações de cenário e tratamento de exceções com 
+     * reutilização de código.
+     * 
+     * @param cenario cenario a ser verificado.
+     */
+    private String validaCenario(int cenario, String acao) {
+        if (cenario <= 0) {
+            String msg = "Erro " + acao + ": Cenario invalido";
+            throw new IllegalArgumentException(msg);
+        }
         
         for (Cenario c: cenarios) {
             if (c.getNumeracao() == cenario) {
@@ -97,8 +106,8 @@ public class Controle {
             }
         }
         
-        throw new NoSuchElementException("Erro na consulta de cenario: Cenario "
-                + "nao cadastrado");
+        String msg = "Erro " + acao + ": Cenario nao cadastrado";
+        throw new NoSuchElementException(msg);
     }
     
     /**
@@ -107,7 +116,7 @@ public class Controle {
      * @return representação em string de todos os cenários cadastrados.
      */
     public String todosCenarios() {
-        String strCenarios = "Cenários: " + System.lineSeparator();
+        String strCenarios = "Cenarios: " + System.lineSeparator();
         for (Cenario cenario: cenarios) {
             strCenarios += cenario.toString() + System.lineSeparator();
         }
@@ -127,19 +136,9 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro no cadastro de aposta: "
-                    + "Cenario nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro no cadastro de aposta: "
-                    + "Cenario invalido");
-        }
+        validaCenario(cenario, "no cadastro de aposta");
         
-        return cenarios.get(cenario - 1).
-                adicionaAposta(apostador, previsao, valor);
+        return cenarios.get(cenario - 1).criaAposta(apostador, previsao, valor);
     }
     
     /**
@@ -156,25 +155,15 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao, int valorSeguro, int custo) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro no cadastro de aposta: "
-                    + "Cenario nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro no cadastro de aposta: "
-                    + "Cenario invalido");
-        }
+        validaCenario(cenario, "no cadastro de aposta");
         
         caixa += custo;
         
-        return cenarios.get(cenario - 1).
-                adicionaAposta(apostador, previsao, valor, valorSeguro);
+        return cenarios.get(cenario - 1).criaAposta(apostador, previsao, valor, valorSeguro);
     }
     
     /**
-     * Método para cadastrar uma nova aposta assegurada por valor.
+     * Método para cadastrar uma nova aposta assegurada por taxa.
      * 
      * @param cenario numeração do cenário a se cadastrar a aposta;.
      * @param apostador nome do apostador.
@@ -187,21 +176,11 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao, double taxaSeguro, int custo) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro no cadastro de aposta: "
-                    + "Cenario nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro no cadastro de aposta: "
-                    + "Cenario invalido");
-        }
+        validaCenario(cenario, "no cadastro de aposta");
         
         caixa += custo;
         
-        return cenarios.get(cenario - 1).
-                adicionaAposta(apostador, previsao, valor, taxaSeguro);
+        return cenarios.get(cenario - 1).criaAposta(apostador, previsao, valor, taxaSeguro);
     }
     
     /**
@@ -212,16 +191,7 @@ public class Controle {
      * @return valor monetário, em centavos, total apostado em um cenário.
      */
     public int valorTotalDeApostas(int cenario) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro na consulta do valor total "
-                    + "de apostas: Cenario nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro na consulta do valor total"
-                    + " de apostas: Cenario invalido");
-        }
+        validaCenario(cenario, "na consulta do valor total de apostas");
         
         return cenarios.get(cenario - 1).valorTotalApostas();
     }
@@ -233,16 +203,7 @@ public class Controle {
      * @return quantidade de apostas feitas em um cenário.
      */
     public int qtdApostas(int cenario) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro na consulta do total de "
-                    + "apostas: Cenario nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro na consulta do total de "
-                    + "apostas: Cenario invalido");
-        }
+        validaCenario(cenario, "na consulta do total de apostas");
         
         return cenarios.get(cenario - 1).totalApostas();
     }
@@ -267,16 +228,7 @@ public class Controle {
      * cenário ocorreu na vida real.
      */
     public void fecharAposta(int cenario, boolean ocorreu) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro ao fechar aposta: Cenario "
-                    + "nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro ao fechar aposta: Cenario "
-                    + "invalido");
-        }
+        validaCenario(cenario, "ao fechar aposta");
         
         Cenario c = cenarios.get(cenario -1);
         
@@ -298,16 +250,7 @@ public class Controle {
      * @return o valor total, em centavos, do quanto que o caixa possui.
      */
     public int getCaixaCenario(int cenario) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro na consulta do caixa do "
-                    + "cenario: Cenario nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro na consulta do caixa do "
-                    + "cenario: Cenario invalido");
-        }
+        validaCenario(cenario, "na consulta do caixa do cenario");
         
         Cenario c = cenarios.get(cenario - 1);
 
@@ -326,16 +269,7 @@ public class Controle {
      * @return o valor total, em centavos, do rateio que será distribuído.
      */
     public int getTotalRateioCenario(int cenario) {
-        try {
-            buscaCenario(cenario);
-        } catch (NoSuchElementException nsee) {
-            throw new NoSuchElementException("Erro na consulta do total de "
-                    + "rateio do cenario: Cenario nao cadastrado");
-            
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalArgumentException("Erro na consulta do total de "
-                    + "rateio do cenario: Cenario invalido");
-        }
+        validaCenario(cenario, "na consulta do total de rateio do cenario");
         
         Cenario c = cenarios.get(cenario - 1);
 

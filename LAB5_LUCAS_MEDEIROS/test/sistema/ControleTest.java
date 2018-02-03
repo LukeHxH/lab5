@@ -96,7 +96,7 @@ public class ControleTest {
     @Test
     public void testTodosCenarios1() {
         Controle controle = new Controle(100000, 0.01);
-        assertEquals("Cenários: \n", controle.todosCenarios());
+        assertEquals("Cenarios: \n", controle.todosCenarios());
     }
     
     @Test
@@ -107,7 +107,7 @@ public class ControleTest {
         controle.cadastraCenario("Vão cantar alo alo marciano.");
         controle.fecharAposta(2, true);
         controle.fecharAposta(3, false);
-        assertEquals("Cenários: \n"
+        assertEquals("Cenarios: \n"
                 + "1 - Todos os alunos vão passar por média. - Nao finalizado\n"
                 + "2 - Nenhum aluno vai passar por média. - Finalizado (ocorreu)"
                 + "\n3 - Vão cantar alo alo marciano. - Finalizado (n ocorreu)\n"

@@ -13,6 +13,7 @@ public class Cenario {
     private String status;
     private int caixaCenario;
     private HashSet<Aposta> apostas;
+    private HashSet<ApostaSegura> apostasSeguras;
     
     /**
      * Construtor de Cenario.
@@ -21,9 +22,8 @@ public class Cenario {
      * @param descricao descricao do cenário.
      */
     public Cenario(int numeracao, String descricao) {
-        if (descricao.trim().isEmpty())
-            throw new IllegalArgumentException("Erro no cadastro de cenario: "
-                    + "Descricao nao pode ser vazia");
+        Validacoes.validaString(descricao, "Erro no cadastro de cenario: "
+                + "Descricao nao pode ser vazia");
         
         this.descricao = descricao;
         this.numeracao = numeracao;
@@ -76,7 +76,7 @@ public class Cenario {
      * @param valor valor em centavos da aposta.
      * @return <tt>true</tt> se foi corretamente inserido.
      */
-    public boolean adicionaAposta(String apostador, String aposta, int valor) {
+    public boolean criaAposta(String apostador, String aposta, int valor) {
         Aposta a = new Aposta(apostador, aposta, valor);
         
         return apostas.add(a);
@@ -90,28 +90,33 @@ public class Cenario {
      * @param aposta previsão de aposta.
      * @param valor valor em centavos da aposta.
      * @param valorSeguro valor a ser assegurado.
-     * @return 
+     * @return <tt>true</tt> se foi corretamente inserido.
      */
-    public boolean adicionaAposta(String apostador, String aposta, int valor,
+    public boolean criaAposta(String apostador, String aposta, int valor,
             int valorSeguro) {
+        TipoValor tipoValor = new TipoValor(valorSeguro);
+        ApostaSegura a = new ApostaSegura(apostador, aposta, valor, 0,
+                tipoValor);
         
-        return true;
+        return apostasSeguras.add(a);
     }
     
     /**
-     * Método para adicionar uma aposta assegurada por valor no conjunto de
+     * Método para adicionar uma aposta assegurada por taxa no conjunto de
      * apostas de um cenário.
      * 
      * @param apostador nome do apostador.
      * @param aposta previsão de aposta.
      * @param valor valor em centavos da aposta.
      * @param taxaSeguro taxa a ser assegurada.
-     * @return 
+     * @return <tt>true</tt> se foi corretamente inserido.
      */
-    public boolean adicionaAposta(String apostador, String aposta, int valor,
+    public boolean criaAposta(String apostador, String aposta, int valor,
             double taxaSeguro) {
+        TipoTaxa tipoTaxa = new TipoTaxa(taxaSeguro);
+        ApostaSegura a = new ApostaSegura(apostador, aposta, valor,0 , tipoTaxa);
         
-        return true;
+        return apostasSeguras.add(a);
     }
     
     /**
@@ -218,7 +223,7 @@ public class Cenario {
     }
 
     /**
-     * Sobrescrição do método toString().
+     * Sobrescrita do método toString().
      * 
      * @return representação em string de um cenário (com numeração, descrição
      * e status do cenário).
@@ -229,7 +234,7 @@ public class Cenario {
     }
 
     /**
-     * Sobrescrição do método hashCode().
+     * Sobrescrita do método hashCode().
      * 
      * @return hashCode da numeração.
      */
@@ -241,7 +246,7 @@ public class Cenario {
     }
 
     /**
-     * Sobrescrição do método equals() de cenário.
+     * Sobrescrita do método equals() de cenário.
      * 
      * @param obj objeto a ser comparado com essa instância.
      * @return <tt>true</tt> se os objetos forem iguais.

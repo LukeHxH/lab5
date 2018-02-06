@@ -11,6 +11,8 @@ public class Aposta {
     private int centavosAposta;
     private boolean ganhou;
     
+    private Validacoes val = new Validacoes();
+    
     /**
      * Construtor de Aposta.
      * 
@@ -20,16 +22,16 @@ public class Aposta {
      */
     
     public Aposta(String apostador, String previsao, int centavosAposta) {
-        Validacoes.validaString(apostador, "Erro no cadastro de aposta: "
+        val.validaString(apostador, "Erro no cadastro de aposta: "
                     + "Apostador nao pode ser vazio ou nulo");
         
-        Validacoes.validaString(previsao, "Erro no cadastro de aposta: "
+        val.validaString(previsao, "Erro no cadastro de aposta: "
                     + "Previsao nao pode ser vazia ou nula");
         
-        Validacoes.validaNumeroMenorIgualZero(centavosAposta, "Erro no cadastro"
+        val.validaNumeroMenorIgualZero(centavosAposta, "Erro no cadastro"
                 + " de aposta: Valor nao pode ser menor ou igual a zero");
         
-        Validacoes.validaPrevisao(previsao);
+        val.validaPrevisao(previsao);
         
         this.apostador = apostador;
         this.previsao = previsao;

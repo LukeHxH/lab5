@@ -1,6 +1,7 @@
 package sistema;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 
 /**
  * Representação de um cenário disponível para aposta no sistema.
@@ -15,6 +16,8 @@ public class Cenario {
     private HashSet<Aposta> apostas;
     private HashSet<ApostaSegura> apostasSeguras;
     
+    private Validacoes val = new Validacoes();
+    
     /**
      * Construtor de Cenario.
      * 
@@ -22,7 +25,7 @@ public class Cenario {
      * @param descricao descricao do cenário.
      */
     public Cenario(int numeracao, String descricao) {
-        Validacoes.validaString(descricao, "Erro no cadastro de cenario: "
+        val.validaString(descricao, "Erro no cadastro de cenario: "
                 + "Descricao nao pode ser vazia");
         
         this.descricao = descricao;
@@ -83,6 +86,15 @@ public class Cenario {
     }
     
     /**
+     * Método para definir o ID de uma aposta segura.
+     * 
+     * @return numero correspondente ao ID da aposta assegurada.
+     */
+    private int idSegura() {
+        return apostasSeguras.size() + 1;
+    }
+    
+    /**
      * Método para adicionar uma aposta assegurada por valor no conjunto de
      * apostas de um cenário.
      * 
@@ -95,7 +107,7 @@ public class Cenario {
     public boolean criaAposta(String apostador, String aposta, int valor,
             int valorSeguro) {
         TipoValor tipoValor = new TipoValor(valorSeguro);
-        ApostaSegura a = new ApostaSegura(apostador, aposta, valor, 0,
+        ApostaSegura a = new ApostaSegura(apostador, aposta, valor, idSegura(),
                 tipoValor);
         
         return apostasSeguras.add(a);
@@ -114,9 +126,34 @@ public class Cenario {
     public boolean criaAposta(String apostador, String aposta, int valor,
             double taxaSeguro) {
         TipoTaxa tipoTaxa = new TipoTaxa(taxaSeguro);
-        ApostaSegura a = new ApostaSegura(apostador, aposta, valor,0 , tipoTaxa);
+        ApostaSegura a = new ApostaSegura(apostador, aposta, valor, idSegura(),
+                tipoTaxa);
         
         return apostasSeguras.add(a);
+    }
+    
+    /**
+     * Método para alterar o tipo de aposta assegurada por taxa para valor.
+     * 
+     * @param apostaAssegurada id da aposta assegurada.
+     * @param valor valor a ser passado.
+     * @return id da aposta.
+     */
+    public int alterarSeguroValor(int apostaAssegurada, int valor){
+        val.validaNumeroMenorIgualZero(apostaAssegurada, 
+                "Erro na alteraçao de seguro valor: Aposta invalida");
+        
+        for (ApostaSegura a: apostasSeguras) {
+            if (a.getId() == apostaAssegurada) {
+                TipoValor tipoValor = new TipoValor(valor);
+                a.setSeguro(tipoValor);
+                
+                return apostaAssegurada;
+            }
+        }
+        
+        throw new NoSuchElementException("Erro na alteraçao de seguro valor:"
+                + " Aposta nao existe");
     }
     
     /**
@@ -130,6 +167,10 @@ public class Cenario {
         
         for (Aposta a: apostas) {
             soma += a.getCentavosAposta();
+        }
+        
+        for (ApostaSegura as: apostasSeguras) {
+            soma += as.getCentavosAposta();
         }
         
         return soma;
@@ -147,6 +188,10 @@ public class Cenario {
             strApostas += a.toString() + System.lineSeparator();
         }
         
+        for (ApostaSegura as: apostasSeguras) {
+            strApostas += as.toString() + System.lineSeparator();
+        }
+        
         return strApostas;
     }
     
@@ -156,7 +201,7 @@ public class Cenario {
      * @return tamanho do conjunto de apostas de um cenário.
      */
     public int totalApostas() {
-        return apostas.size();
+        return apostas.size() + apostasSeguras.size();
     }
     
     /**

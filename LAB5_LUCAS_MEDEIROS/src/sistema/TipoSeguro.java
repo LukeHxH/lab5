@@ -6,7 +6,7 @@ package sistema;
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */
-public abstract class TipoSeguro {
+public interface TipoSeguro {
     
     /**
      * Método que será implementado nas classes TipoTaxa e TipoValor, que vai
@@ -15,5 +15,5 @@ public abstract class TipoSeguro {
      * @param valorApostado valor apostado pelo apostador perdedor.
      * @return valor que deve retornar ao apostador perdedor.
      */
-    public abstract int valorAssegurado(int valorApostado);
+    public int valorAssegurado(int valorApostado);
 }

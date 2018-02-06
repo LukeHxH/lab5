@@ -10,6 +10,8 @@ public class ApostaSegura extends Aposta {
     private int id;
     private TipoSeguro tipo;
     
+    private Validacoes val = new Validacoes();
+    
     /**
      * Construtor de ApostaSegura.
      * 
@@ -22,15 +24,24 @@ public class ApostaSegura extends Aposta {
     public ApostaSegura(String apostador, String previsao, int centavosAposta,
             int id, TipoSeguro tipo) {
         super(apostador, previsao, centavosAposta);
-        if (tipo == null)
-            throw new NullPointerException("Erro no cadastro de aposta segura: "
-                    + " Tipo nulo ou inválido.");
+        
+        val.validaObjetoNulo(tipo, "Erro no cadastro de aposta segura: Tipo "
+                + "nulo ou invalido.");
         
         this.tipo = tipo;
     }
+    
+    /**
+     * Método acessório para o id de uma aposta segura.
+     * 
+     * @return id da aposta.
+     */
+    public int getId() {
+        return id;
+    }
 
     /**
-     * Método setter para o tipo de tipo, que pode ser alterado.
+     * Método setter para o tipo de seguro, que pode ser alterado.
      * 
      * @param tipo tipo de tipo realizado.
      */
@@ -60,6 +71,12 @@ public class ApostaSegura extends Aposta {
         return super.toString() + " - " + tipo.toString();
     }
     
+    /**
+     * Sobrescrita do método equals() de aposta segura.
+     * 
+     * @param obj objeto a ser comparado com essa instância.
+     * @return <tt>true</tt> se os objetos forem iguais.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -75,6 +92,11 @@ public class ApostaSegura extends Aposta {
         return this.id == other.id;
     }
 
+    /**
+     * Sobrescrita do método hashCode() de aposta segura.
+     * 
+     * @return hashCode do id.
+     */
     @Override
     public int hashCode() {
         int hash = 7;

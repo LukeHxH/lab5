@@ -5,7 +5,7 @@ package sistema;
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */
-public class TipoValor extends TipoSeguro {
+public class TipoValor implements TipoSeguro {
     private final int valor;
 
     /**

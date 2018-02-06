@@ -5,7 +5,7 @@ package sistema;
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */
-public class TipoTaxa extends TipoSeguro {
+public class TipoTaxa implements TipoSeguro {
     private final double taxa;
 
     /**

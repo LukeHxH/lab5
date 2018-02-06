@@ -5,7 +5,9 @@
         <group>
             <file>file:/home/lucasmnf/Git/lab5/LAB5_LUCAS_MEDEIROS/src/sistema/Aposta.java</file>
             <file>file:/home/lucasmnf/Git/lab5/LAB5_LUCAS_MEDEIROS/src/sistema/Cenario.java</file>
-            <file>file:/home/lucasmnf/Git/lab5/LAB5_LUCAS_MEDEIROS/src/sistema/CenarioBonus.java</file>
+            <file>file:/home/lucasmnf/Git/lab5/LAB5_LUCAS_MEDEIROS/src/sistema/ApostaSegura.java</file>
+            <file>file:/home/lucasmnf/Git/lab5/LAB5_LUCAS_MEDEIROS/src/sistema/TipoValor.java</file>
+            <file>file:/home/lucasmnf/Git/lab5/LAB5_LUCAS_MEDEIROS/src/sistema/TipoTaxa.java</file>
             <file>file:/home/lucasmnf/Git/lab5/LAB5_LUCAS_MEDEIROS/src/sistema/Controle.java</file>
         </group>
     </open-files>

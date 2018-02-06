@@ -1,5 +1,8 @@
 package sistema;
 
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 /**
  * Classe para realizar a validação de dados que serão utilizados no sistema.
  * 
@@ -13,7 +16,7 @@ public class Validacoes {
      * @param string string a ser validada.
      * @param msg mensagem a ser exibida caso não passe na validação.
      */
-    public static void validaString(String string, String msg) {
+    public void validaString(String string, String msg) {
         if (string == null || string.trim().isEmpty())
             throw new IllegalArgumentException(msg);
     }
@@ -24,7 +27,7 @@ public class Validacoes {
      * @param num número a ser validado.
      * @param msg mensagem a ser exibida caso não passe na validação.
      */
-    public static void validaNumeroMenorIgualZero(int num, String msg) {
+    public void validaNumeroMenorIgualZero(int num, String msg) {
         if (num <= 0)
             throw new IllegalArgumentException(msg);
     }
@@ -35,7 +38,7 @@ public class Validacoes {
      * @param num número a ser validado.
      * @param msg mensagem a ser exibida caso não passe na validação.
      */
-    public static void validaNumeroMenorZero(double num, String msg) {
+    public void validaNumeroMenorZero(double num, String msg) {
         if (num < 0)
             throw new IllegalArgumentException(msg);
     }
@@ -46,10 +49,42 @@ public class Validacoes {
      * 
      * @param previsao previsão feita pela aposta.
      */
-    public static void validaPrevisao(String previsao) {
+    public void validaPrevisao(String previsao) {
         if (!(previsao.trim().toUpperCase().equals("VAI ACONTECER") ||
                 previsao.trim().toUpperCase().equals("N VAI ACONTECER")))
             throw new IllegalArgumentException("Erro no cadastro de aposta: "
                         + "Previsao invalida");
+    }
+    
+    /**
+     * Método para validar um objeto, se ele é nulo ou não.
+     * 
+     * @param o objeto a ser validado.
+     * @param msg mensagem a ser exibida caso não passe na validação.
+     */
+    public void validaObjetoNulo(Object o, String msg) {
+        if (o == null)
+            throw new NullPointerException(msg);
+    }
+    
+    /**
+     * Método para fazer verificações de cenário.
+     * 
+     * @param cenarios lista de cenarios.
+     * @param cenario id do cenario.
+     * @param msg mensagem de erro.
+     * @return representação em string do cenario, caso exista.
+     */
+    public String validaCenario(ArrayList<Cenario> cenarios, int cenario, 
+            String msg) {
+        validaNumeroMenorIgualZero(cenario, msg + ": Cenario invalido");
+        
+        for (Cenario c: cenarios) {
+            if(c.getNumeracao() == cenario)
+                return c.toString();
+        }
+        
+        throw new NoSuchElementException(msg + ": Cenario nao cadastrado");
+        
     }
 }

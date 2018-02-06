@@ -1,7 +1,6 @@
 package sistema;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
  * Representação da classe que controla o sistema.
@@ -12,6 +11,8 @@ public class Controle {
     private int caixa;
     private double taxa;
     private ArrayList<Cenario> cenarios;
+    
+    private Validacoes val = new Validacoes();
 
     /**
      * Construtor de Controle.
@@ -20,10 +21,10 @@ public class Controle {
      * @param taxa o valor da taxa inicial.
      */
     public Controle(int caixa, double taxa) {
-        Validacoes.validaNumeroMenorZero(caixa, "Erro na inicializacao: Caixa "
+        val.validaNumeroMenorZero(caixa, "Erro na inicializacao: Caixa "
                 + "nao pode ser inferior a 0");
         
-        Validacoes.validaNumeroMenorZero(taxa, "Erro na inicializacao: Taxa nao"
+        val.validaNumeroMenorZero(taxa, "Erro na inicializacao: Taxa nao"
                 + " pode ser inferior a 0");
         
         this.caixa = caixa;
@@ -85,29 +86,7 @@ public class Controle {
      * cenário cadastrado com essa numeração.
      */
     public String buscaCenario(int cenario) {
-        return validaCenario(cenario, "na consulta de cenario");
-    }
-    
-    /**
-     * Método para fazer verificações de cenário e tratamento de exceções com 
-     * reutilização de código.
-     * 
-     * @param cenario cenario a ser verificado.
-     */
-    private String validaCenario(int cenario, String acao) {
-        if (cenario <= 0) {
-            String msg = "Erro " + acao + ": Cenario invalido";
-            throw new IllegalArgumentException(msg);
-        }
-        
-        for (Cenario c: cenarios) {
-            if (c.getNumeracao() == cenario) {
-                return c.toString();
-            }
-        }
-        
-        String msg = "Erro " + acao + ": Cenario nao cadastrado";
-        throw new NoSuchElementException(msg);
+        return val.validaCenario(cenarios, cenario, "Erro na consulta de cenario");
     }
     
     /**
@@ -136,7 +115,7 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao) {
-        validaCenario(cenario, "no cadastro de aposta");
+        val.validaCenario(cenarios, cenario, "Erro no cadastro de aposta");
         
         return cenarios.get(cenario - 1).criaAposta(apostador, previsao, valor);
     }
@@ -155,7 +134,7 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao, int valorSeguro, int custo) {
-        validaCenario(cenario, "no cadastro de aposta");
+        val.validaCenario(cenarios, cenario, "Erro no cadastro de aposta");
         
         caixa += custo;
         
@@ -176,7 +155,7 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao, double taxaSeguro, int custo) {
-        validaCenario(cenario, "no cadastro de aposta");
+        val.validaCenario(cenarios, cenario, "Erro no cadastro de aposta");
         
         caixa += custo;
         
@@ -191,7 +170,8 @@ public class Controle {
      * @return valor monetário, em centavos, total apostado em um cenário.
      */
     public int valorTotalDeApostas(int cenario) {
-        validaCenario(cenario, "na consulta do valor total de apostas");
+        val.validaCenario(cenarios, cenario, "Erro na consulta do valor total "
+                + "de apostas");
         
         return cenarios.get(cenario - 1).valorTotalApostas();
     }
@@ -203,7 +183,8 @@ public class Controle {
      * @return quantidade de apostas feitas em um cenário.
      */
     public int qtdApostas(int cenario) {
-        validaCenario(cenario, "na consulta do total de apostas");
+        val.validaCenario(cenarios, cenario, "Erro na consulta do total de "
+                + "apostas");
         
         return cenarios.get(cenario - 1).totalApostas();
     }
@@ -228,7 +209,7 @@ public class Controle {
      * cenário ocorreu na vida real.
      */
     public void fecharAposta(int cenario, boolean ocorreu) {
-        validaCenario(cenario, "ao fechar aposta");
+        val.validaCenario(cenarios, cenario, "Erro ao fechar aposta");
         
         Cenario c = cenarios.get(cenario -1);
         
@@ -250,7 +231,8 @@ public class Controle {
      * @return o valor total, em centavos, do quanto que o caixa possui.
      */
     public int getCaixaCenario(int cenario) {
-        validaCenario(cenario, "na consulta do caixa do cenario");
+        val.validaCenario(cenarios, cenario, "Erro na consulta do caixa do "
+                + "cenario");
         
         Cenario c = cenarios.get(cenario - 1);
 
@@ -269,7 +251,8 @@ public class Controle {
      * @return o valor total, em centavos, do rateio que será distribuído.
      */
     public int getTotalRateioCenario(int cenario) {
-        validaCenario(cenario, "na consulta do total de rateio do cenario");
+        val.validaCenario(cenarios, cenario, "Erro na consulta do total de "
+                + "rateio do cenario");
         
         Cenario c = cenarios.get(cenario - 1);
 

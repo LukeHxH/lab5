@@ -11,7 +11,9 @@ public class Aposta {
     private int centavosAposta;
     private boolean ganhou;
     
-    private Validacoes val = new Validacoes();
+    private Validator val = new Validator();
+    
+    private final int id;
     
     /**
      * Construtor de Aposta.
@@ -19,24 +21,15 @@ public class Aposta {
      * @param apostador nome do apostador.
      * @param previsao previsão de aposta.
      * @param centavosAposta valor, em centavos, da aposta.
+     * @param id id da aposta
      */
     
-    public Aposta(String apostador, String previsao, int centavosAposta) {
-        val.validaString(apostador, "Erro no cadastro de aposta: "
-                    + "Apostador nao pode ser vazio ou nulo");
-        
-        val.validaString(previsao, "Erro no cadastro de aposta: "
-                    + "Previsao nao pode ser vazia ou nula");
-        
-        val.validaNumeroMenorIgualZero(centavosAposta, "Erro no cadastro"
-                + " de aposta: Valor nao pode ser menor ou igual a zero");
-        
-        val.validaPrevisao(previsao);
-        
+    public Aposta(String apostador, String previsao, int centavosAposta, int id) {
         this.apostador = apostador;
         this.previsao = previsao;
         this.centavosAposta = centavosAposta;
         this.ganhou = false;
+        this.id = id;
     }
 
     /**
@@ -46,6 +39,15 @@ public class Aposta {
      */
     public String getApostador() {
         return apostador;
+    }
+
+    /**
+     * Método acessório para o ID da aposta.
+     * 
+     * @return id da aposta.
+     */
+    public int getId() {
+        return id;
     }
 
     /**

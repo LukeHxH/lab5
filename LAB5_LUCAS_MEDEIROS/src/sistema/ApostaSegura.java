@@ -7,10 +7,9 @@ package sistema;
  */
 public class ApostaSegura extends Aposta {
     
-    private int id;
     private TipoSeguro tipo;
     
-    private Validacoes val = new Validacoes();
+    private Validator val = new Validator();
     
     /**
      * Construtor de ApostaSegura.
@@ -23,21 +22,12 @@ public class ApostaSegura extends Aposta {
      */
     public ApostaSegura(String apostador, String previsao, int centavosAposta,
             int id, TipoSeguro tipo) {
-        super(apostador, previsao, centavosAposta);
+        super(apostador, previsao, centavosAposta, id);
         
         val.validaObjetoNulo(tipo, "Erro no cadastro de aposta segura: Tipo "
                 + "nulo ou invalido.");
         
         this.tipo = tipo;
-    }
-    
-    /**
-     * Método acessório para o id de uma aposta segura.
-     * 
-     * @return id da aposta.
-     */
-    public int getId() {
-        return id;
     }
 
     /**
@@ -89,7 +79,7 @@ public class ApostaSegura extends Aposta {
             return false;
         }
         final ApostaSegura other = (ApostaSegura) obj;
-        return this.id == other.id;
+        return this.getId() == other.getId();
     }
 
     /**
@@ -100,7 +90,7 @@ public class ApostaSegura extends Aposta {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + this.id;
+        hash = 29 * hash + this.getId();
         return hash;
     }
 }

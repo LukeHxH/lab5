@@ -8,16 +8,16 @@ import java.util.NoSuchElementException;
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */
-public class Validacoes {
+public class Validator {
     
     /**
      * Método para fazer validação de uma string.
      * 
-     * @param string string a ser validada.
+     * @param str string a ser validada.
      * @param msg mensagem a ser exibida caso não passe na validação.
      */
-    public void validaString(String string, String msg) {
-        if (string == null || string.trim().isEmpty())
+    public void validaString(String str, String msg) {
+        if (str.trim().isEmpty())
             throw new IllegalArgumentException(msg);
     }
     
@@ -75,7 +75,7 @@ public class Validacoes {
      * @param msg mensagem de erro.
      * @return representação em string do cenario, caso exista.
      */
-    public String validaCenario(ArrayList<Cenario> cenarios, int cenario, 
+    public String verificaCenarioEhValido(ArrayList<Cenario> cenarios, int cenario, 
             String msg) {
         validaNumeroMenorIgualZero(cenario, msg + ": Cenario invalido");
         
@@ -86,5 +86,61 @@ public class Validacoes {
         
         throw new NoSuchElementException(msg + ": Cenario nao cadastrado");
         
+    }
+    
+    /**
+     * Método para fazer a validação do fechamento de um cenário.
+     * 
+     * @param c cenário a ser validado.
+     * @param msg mensagem de erro.
+     */
+    public void verificaApostaFechada(Cenario c, String msg) {
+        if (!estadoAposta(c))
+            throw new IllegalArgumentException(msg);
+    }
+    
+    /**
+     * Métod para verificar o estado de um cenário.
+     * @param c
+     * @return 
+     */
+    private boolean estadoAposta(Cenario c) {
+        return c.getStatus().toLowerCase().equals("nao finalizado");
+    }
+    
+    /**
+     * Método para fazer a verificação se uma aposta é assegurada ou não.
+     * 
+     * @param a aposta a ser verificada.
+     * @param msg mensagem de erro.
+     */
+    public void verificaApostaSegura(Aposta a, String msg) {
+        if (!(a instanceof ApostaSegura))
+            throw new IllegalArgumentException(msg);
+    }
+    
+    /**
+     * Método para a validação de uma aposta (seja assegurada, ou não).
+     * @param apostador nome do apostador.
+     * @param previsao previsão de aposta.
+     * @param centavosAposta valor, em centavos, da aposta.
+     * @param cenarios lista dos cenários cadastrados no sistema.
+     * @param cenario id do cenário.
+     * @param msg mensagem de erro.
+     */
+    public void validacaoAposta(String apostador, String previsao, 
+            int centavosAposta, ArrayList<Cenario> cenarios, int cenario,
+            String msg) {
+        
+        verificaCenarioEhValido(cenarios, cenario, msg);
+        
+        validaString(apostador, msg +": " + "Apostador nao pode ser vazio ou nulo");
+        
+        validaString(previsao, msg +": " + "Previsao nao pode ser vazia ou nula");
+        
+        validaNumeroMenorIgualZero(centavosAposta, msg + ": Valor nao pode ser "
+                + "menor ou igual a zero");
+        
+        validaPrevisao(previsao);
     }
 }

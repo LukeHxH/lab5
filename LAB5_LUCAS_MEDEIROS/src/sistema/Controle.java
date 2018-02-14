@@ -49,6 +49,9 @@ public class Controle {
      * possível cadastrar.
      */
     public int cadastraCenario(String descricao) {
+        val.validaString(descricao, "Erro no cadastro de cenario: "
+                + "Descricao nao pode ser vazia");
+        
         int numeracao = (cenarios.size() + 1);
         if (cenarios.add(new Cenario(numeracao, descricao)))
             return numeracao;
@@ -116,7 +119,6 @@ public class Controle {
      */
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao) {
-        val.verificaCenarioEhValido(cenarios, cenario, "Erro no cadastro de aposta");
         val.validacaoAposta(apostador, previsao, valor, cenarios, cenario,
                 "Erro no cadastro de aposta");
         
@@ -167,6 +169,38 @@ public class Controle {
         
         return cenarios.get(cenario - 1).criaAposta(apostador, previsao, valor,
                 taxaSeguro);
+    }
+    
+    /**
+     * Método para alterar o tipo de aposta assegurada por taxa para valor.
+     * 
+     * @param cenario cenario que contém a aposta que será alterada.
+     * @param apostaAssegurada id da aposta assegurada.
+     * @param valor valor a ser passado.
+     * @return id da aposta.
+     */
+    public int alterarSeguroValor(int cenario, int apostaAssegurada, int valor){
+        val.validaNumeroMenorIgualZero(apostaAssegurada, 
+                "Erro na alteraçao de seguro valor: Aposta invalida");
+        val.verificaCenarioEhValido(cenarios, cenario, "Erro na alteraçao de...");
+        
+        return cenarios.get(cenario - 1).alterarSeguroValor(apostaAssegurada, valor);
+    }
+    
+    /**
+     * Método para alterar o tipo de aposta assegurada por taxa para valor.
+     * 
+     * @param cenario cenario que contém a aposta que será alterada.
+     * @param apostaAssegurada id da aposta assegurada.
+     * @param taxa taxa a ser passada.
+     * @return id da aposta.
+     */
+    public int alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa){
+        val.validaNumeroMenorIgualZero(apostaAssegurada, 
+                "Erro na alteraçao de seguro taxa: Aposta invalida");
+        val.verificaCenarioEhValido(cenarios, cenario, "Erro na alteraçao de...");
+        
+        return cenarios.get(cenario - 1).alterarSeguroTaxa(apostaAssegurada, taxa);
     }
     
     /**
@@ -228,6 +262,7 @@ public class Controle {
         c.definirValorCaixa(taxa);
 
         caixa += getCaixaCenario(cenario);
+        caixa -= c.valorApostasSeguras();
     }
     
     /**

@@ -17,7 +17,7 @@ public class Validator {
      * @param msg mensagem a ser exibida caso não passe na validação.
      */
     public void validaString(String str, String msg) {
-        if (str.trim().isEmpty())
+        if (str == null || str.trim().isEmpty())
             throw new IllegalArgumentException(msg);
     }
     
@@ -48,11 +48,12 @@ public class Validator {
      * cenário.
      * 
      * @param previsao previsão feita pela aposta.
+     * @param msg mensagem de erro.
      */
-    public void validaPrevisao(String previsao) {
+    public void validaPrevisao(String previsao, String msg) {
         if (!(previsao.trim().toUpperCase().equals("VAI ACONTECER") ||
                 previsao.trim().toUpperCase().equals("N VAI ACONTECER")))
-            throw new IllegalArgumentException("Erro no cadastro de aposta: "
+            throw new IllegalArgumentException(msg + ": "
                         + "Previsao invalida");
     }
     
@@ -100,15 +101,6 @@ public class Validator {
     }
     
     /**
-     * Métod para verificar o estado de um cenário.
-     * @param c
-     * @return 
-     */
-    private boolean estadoAposta(Cenario c) {
-        return c.getStatus().toLowerCase().equals("nao finalizado");
-    }
-    
-    /**
      * Método para fazer a verificação se uma aposta é assegurada ou não.
      * 
      * @param a aposta a ser verificada.
@@ -129,8 +121,7 @@ public class Validator {
      * @param msg mensagem de erro.
      */
     public void validacaoAposta(String apostador, String previsao, 
-            int centavosAposta, ArrayList<Cenario> cenarios, int cenario,
-            String msg) {
+        int centavosAposta, ArrayList<Cenario> cenarios, int cenario, String msg) {
         
         verificaCenarioEhValido(cenarios, cenario, msg);
         
@@ -141,6 +132,15 @@ public class Validator {
         validaNumeroMenorIgualZero(centavosAposta, msg + ": Valor nao pode ser "
                 + "menor ou igual a zero");
         
-        validaPrevisao(previsao);
+        validaPrevisao(previsao, msg);
+    }
+    
+    /**
+     * Métod para verificar o estado de um cenário.
+     * @param c
+     * @return 
+     */
+    private boolean estadoAposta(Cenario c) {
+        return c.getStatus().toLowerCase().equals("nao finalizado");
     }
 }

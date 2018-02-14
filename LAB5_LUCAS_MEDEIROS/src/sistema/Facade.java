@@ -19,9 +19,8 @@ public class Facade {
     public static void main(String[] args) {
         args = new String[] {"sistema.Facade", "acceptance_tests/us1_test.txt",
         "acceptance_tests/us2_test.txt", "acceptance_tests/us3_test.txt",
-        "acceptance_tests/us4_test.txt"};
-        
-        //, "acceptance_tests/us5_test.txt", "acceptance_tests/us6_test.txt"
+        "acceptance_tests/us4_test.txt", "acceptance_tests/us5_test.txt",
+        "acceptance_tests/us6_test.txt"};
         EasyAccept.main(args);
     }
     
@@ -100,6 +99,66 @@ public class Facade {
     public boolean cadastrarAposta(int cenario, String apostador, int valor,
             String previsao) {
         return controlador.cadastrarAposta(cenario, apostador, valor, previsao);
+    }
+    
+    /**
+     * Método para cadastrar uma nova aposta assegurada por valor.
+     * 
+     * @param cenario numeração do cenário a se cadastrar a aposta;.
+     * @param apostador nome do apostador.
+     * @param valor valor em centavos da aposta.
+     * @param previsao previsão do apostador sobre o fim do cenário.
+     * @param valorAssegurado valor a ser assegurado.
+     * @param custo custo do seguro.
+     * @return <tt>true</tt> se foi a aposta foi devidamente cadastrada no
+     * sistema.
+     */
+    public int cadastrarApostaSeguraValor(int cenario, String apostador,
+            int valor, String previsao, int valorAssegurado, int custo) {
+        return controlador.cadastrarAposta(cenario, apostador, valor, previsao, 
+                valorAssegurado, custo);
+    }
+    
+    /**
+     * Método para cadastrar uma nova aposta assegurada por taxa.
+     * 
+     * @param cenario numeração do cenário a se cadastrar a aposta;.
+     * @param apostador nome do apostador.
+     * @param valor valor em centavos da aposta.
+     * @param previsao previsão do apostador sobre o fim do cenário.
+     * @param taxa taxa a ser assegurada.
+     * @param custo custo do seguro.
+     * @return <tt>true</tt> se foi a aposta foi devidamente cadastrada no
+     * sistema.
+     */
+    public int cadastrarApostaSeguraTaxa(int cenario, String apostador,
+            int valor, String previsao, double taxa, int custo) {
+        return controlador.cadastrarAposta(cenario, apostador, valor, previsao, 
+                taxa, custo);
+    }
+    
+    /**
+     * Método para alterar o tipo de aposta assegurada por taxa para valor.
+     * 
+     * @param cenario cenario que contém a aposta que será alterada.
+     * @param apostaAssegurada id da aposta assegurada.
+     * @param valor valor a ser passado.
+     * @return id da aposta.
+     */
+    public int alterarSeguroValor(int cenario, int apostaAssegurada, int valor){
+        return controlador.alterarSeguroValor(cenario, apostaAssegurada, valor);
+    }
+    
+    /**
+     * Método para alterar o tipo de aposta assegurada por taxa para valor.
+     * 
+     * @param cenario cenario que contém a aposta que será alterada.
+     * @param apostaAssegurada id da aposta assegurada.
+     * @param taxa taxa a ser passada.
+     * @return id da aposta.
+     */
+    public int alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa){
+        return controlador.alterarSeguroTaxa(cenario, apostaAssegurada, taxa);
     }
     
     /**

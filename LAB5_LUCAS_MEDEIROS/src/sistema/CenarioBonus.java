@@ -9,6 +9,8 @@ public class CenarioBonus extends Cenario {
     
     private int bonus;
     
+    private Validator val = new Validator();
+    
     /**
      * Construtor de CenarioBonus.
      * 
@@ -19,9 +21,8 @@ public class CenarioBonus extends Cenario {
     public CenarioBonus(int numeracao, String descricao, int bonus) {
         super(numeracao, descricao);
         
-        if (bonus <= 0)
-            throw new IllegalArgumentException("Erro no cadastro de cenario: "
-                    + "Bonus deve ser maior que 0.");
+        val.validaNumeroMenorIgualZero(bonus, "Erro no cadastro de cenario: "
+                + "Bonus invalido");
         
         this.bonus = bonus;
     }

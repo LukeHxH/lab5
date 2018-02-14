@@ -11,8 +11,6 @@ public class Aposta {
     private int centavosAposta;
     private boolean ganhou;
     
-    private Validator val = new Validator();
-    
     private final int id;
     
     /**

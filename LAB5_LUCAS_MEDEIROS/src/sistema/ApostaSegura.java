@@ -9,8 +9,6 @@ public class ApostaSegura extends Aposta {
     
     private TipoSeguro tipo;
     
-    private Validator val = new Validator();
-    
     /**
      * Construtor de ApostaSegura.
      * 
@@ -23,9 +21,6 @@ public class ApostaSegura extends Aposta {
     public ApostaSegura(String apostador, String previsao, int centavosAposta,
             int id, TipoSeguro tipo) {
         super(apostador, previsao, centavosAposta, id);
-        
-        val.validaObjetoNulo(tipo, "Erro no cadastro de aposta segura: Tipo "
-                + "nulo ou invalido.");
         
         this.tipo = tipo;
     }

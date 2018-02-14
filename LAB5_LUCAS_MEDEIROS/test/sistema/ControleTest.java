@@ -18,7 +18,7 @@ public class ControleTest {
         Controle controle = new Controle(30000, -69);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCadastraCenarioDescricaoNula() {
         Controle controle = new Controle(100000, 0.01);
         controle.cadastraCenario(null);
@@ -258,8 +258,41 @@ public class ControleTest {
         controle.cadastrarAposta(1, "Matheus", 1000, "vai acontecer");
         controle.cadastrarAposta(1, "Pablo", 690, "vai acontecer");
         controle.cadastrarAposta(1, "Grace VanderWaal", 698, "vai acontecer");
-        controle.fecharAposta(1, false);
+        controle.fecharAposta(1, false); // mas merecia.
         assertEquals(2269, controle.getTotalRateioCenario(1));
         assertEquals(119, controle.getCaixaCenario(1));
+    }
+    
+    @Test
+    public void testCriaCenarioBonus() {
+        Controle controle = new Controle(100000, 0.01);
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        assertEquals(99000, controle.getCaixa());
+    }
+    
+    @Test
+    public void testCriaCenarioBonusComApostas1() {
+        Controle controle = new Controle(100000, 0.01);
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(1, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(1, "José", 1000, "n vai acontecer", 0.05, 500);
+        controle.cadastrarAposta(1, "Maciel", 2000, "n vai acontecer");
+        assertEquals(100400, controle.getCaixa());
+    }
+    
+    @Test
+    public void testCriaCenarioBonusComApostas2() {
+        Controle controle = new Controle(100000, 0.01);
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(1, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(1, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(1, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(1, "Maciel", 2000, "n vai acontecer");
+        controle.fecharAposta(1, true);
+        assertEquals(100330, controle.getCaixa());
     }
 }

@@ -24,9 +24,6 @@ public class Cenario {
      * @param descricao descricao do cenário.
      */
     public Cenario(int numeracao, String descricao) {
-        val.validaString(descricao, "Erro no cadastro de cenario: "
-                + "Descricao nao pode ser vazia");
-        
         this.descricao = descricao;
         this.numeracao = numeracao;
         this.status = "Nao finalizado";
@@ -145,9 +142,6 @@ public class Cenario {
      * @return id da aposta.
      */
     public int alterarSeguroValor(int apostaAssegurada, int valor){
-        val.validaNumeroMenorIgualZero(apostaAssegurada, 
-                "Erro na alteraçao de seguro valor: Aposta invalida");
-        
         for (Aposta a: apostas) {
             
             if (a.getId() == apostaAssegurada) {
@@ -171,9 +165,6 @@ public class Cenario {
      * @return id da aposta.
      */
     public int alterarSeguroTaxa(int apostaAssegurada, double taxa){
-        val.validaNumeroMenorIgualZero(apostaAssegurada, 
-                "Erro na alteraçao de seguro valor: Aposta invalida");
-        
         for (Aposta a: apostas) {
             
             if (a.getId() == apostaAssegurada) {
@@ -186,7 +177,7 @@ public class Cenario {
             }
         }
         
-        throw new NoSuchElementException("Erro na alteraçao de seguro valor:"
+        throw new NoSuchElementException("Erro na alteraçao de seguro taxa:"
                 + " Aposta nao existe");
     }
     
@@ -282,6 +273,26 @@ public class Cenario {
      */
     public void definirValorCaixa(double taxa) {
         caixaCenario = (int) Math.floor(valorApostadoPerdedores() * taxa);
+    }
+    
+    /**
+     * Método para definir o valor das apostas asseguradas a ser retirado do
+     * caixa do sistema.
+     * 
+     * @return valor total, em centavos, do valor assegurado nas apostas 
+     * asseguradas que perderam.
+     */
+    public int valorApostasSeguras() {
+        int soma = 0;
+        for (Aposta a: apostas) {
+            try {
+                val.verificaApostaSegura(a, "");
+                ApostaSegura aSeg = (ApostaSegura) a;
+                if (!aSeg.ganhou())
+                    soma += aSeg.valorAsseguradoEmDerrota();
+            } catch(IllegalArgumentException iae) {}
+        }
+        return soma;
     }
     
     /**

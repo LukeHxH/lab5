@@ -295,4 +295,22 @@ public class ControleTest {
         controle.fecharAposta(1, true);
         assertEquals(100330, controle.getCaixa());
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testAlteraApostaValor1() {
+        Controle controle = new Controle(100000, 0.01);
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(1, "Lucas", 1981, "vai acontecer");
+        controle.alterarSeguroValor(1, 1, 100);
+    }
+    
+    @Test
+    public void testAlteraApostaValor2() {
+        Controle controle = new Controle(100000, 0.01);
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(1, "Lucas", 1981, "vai acontecer", 0.1, 6000);
+        controle.alterarSeguroValor(1, 1, 100);
+    }
 }

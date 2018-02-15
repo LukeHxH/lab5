@@ -30,7 +30,7 @@ public class Cenario {
         this.apostas = new HashSet<>();
         this.caixaCenario = 0;
     }
-
+    
     /**
      * Método acessório da descrição de um cenário.
      * 

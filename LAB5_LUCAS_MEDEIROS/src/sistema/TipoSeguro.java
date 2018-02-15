@@ -1,8 +1,8 @@
 package sistema;
 
 /**
- * Representação abstrata de um tipo de seguro em uma aposta assegurada feita no
- * sistema.
+ * Representação em interface de um tipo de seguro em uma aposta assegurada 
+ * feita no sistema.
  * 
  * @author Lucas de Medeiros Nunes Fernandes
  */

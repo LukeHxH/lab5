@@ -1,6 +1,9 @@
 package sistema;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Representação da classe que controla o sistema.
@@ -105,6 +108,27 @@ public class Controle {
         }
         
         return strCenarios;
+    }
+    
+    public void alterarOrdem(String ordem) {
+        val.validaString(ordem, "Erro na alteraçao de ordenaçao de cenario");
+        
+        Comparator<Cenario> comparatorCenarios = null;
+        
+        switch(ordem.toLowerCase()) {
+            case "cadastro":
+                comparatorCenarios = new ComparatorCenarioCadastro();
+                break;
+            case "nome":
+                comparatorCenarios = new ComparatorCenarioDescricao();
+                break;
+            case "apostas":
+                Collections.sort(cenarios, new ComparatorCenarioApostas());
+                Collections.reverse(cenarios);
+                break;
+            default:
+                throw new IllegalArgumentException("ordenaçao invalida");
+        }
     }
     
     /**

@@ -20,7 +20,7 @@ public class Facade {
         args = new String[] {"sistema.Facade", "acceptance_tests/us1_test.txt",
         "acceptance_tests/us2_test.txt", "acceptance_tests/us3_test.txt",
         "acceptance_tests/us4_test.txt", "acceptance_tests/us5_test.txt",
-        "acceptance_tests/us6_test.txt"};
+        "acceptance_tests/us6_test.txt", "acceptance_tests/us7_test.txt"};
         EasyAccept.main(args);
     }
     
@@ -190,6 +190,26 @@ public class Facade {
      */
     public String exibeApostas(int cenario) {
         return controlador.exibeApostas(cenario);
+    }
+    
+    /**
+     * Método para alterar o método de ordenação dos cenários.
+     * 
+     * @param ordem string com a ordenação necessária.
+     */
+    public void alterarOrdem(String ordem) {
+        controlador.alterarOrdem(ordem);
+    }
+    
+    /**
+     * Método para exibir o cenário ordenado de acordo com a última definição de
+     * ordenação.
+     * 
+     * @param cenario posicao do cenario no array.
+     * @return toString() do cenário procurado.
+     */
+    public String exibirCenarioOrdenado(int cenario) {
+        return controlador.exibirCenarioOrdenado(cenario);
     }
     
     /**

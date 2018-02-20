@@ -1,7 +1,6 @@
 package sistema;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -13,6 +12,7 @@ import java.util.Comparator;
 public class Controle {
     private int caixa;
     private double taxa;
+    private Comparator<Cenario> comparatorCenarios;
     private ArrayList<Cenario> cenarios;
     
     private Validator val = new Validator();
@@ -33,6 +33,7 @@ public class Controle {
         this.caixa = caixa;
         this.taxa = taxa;
         cenarios = new ArrayList<>();
+        comparatorCenarios = new ComparatorCenarioCadastro();
     }
 
     /**
@@ -110,10 +111,14 @@ public class Controle {
         return strCenarios;
     }
     
+    /**
+     * Método para alterar o método de ordenação dos cenários.
+     * 
+     * @param ordem string com a ordenação necessária.
+     */
     public void alterarOrdem(String ordem) {
-        val.validaString(ordem, "Erro na alteraçao de ordenaçao de cenario");
-        
-        Comparator<Cenario> comparatorCenarios = null;
+        val.validaString(ordem, "Erro ao alterar ordem: Ordem nao pode ser "
+                + "vazia ou nula");
         
         switch(ordem.toLowerCase()) {
             case "cadastro":
@@ -123,12 +128,32 @@ public class Controle {
                 comparatorCenarios = new ComparatorCenarioDescricao();
                 break;
             case "apostas":
-                Collections.sort(cenarios, new ComparatorCenarioApostas());
-                Collections.reverse(cenarios);
+                comparatorCenarios = new ComparatorCenarioApostas();
                 break;
             default:
-                throw new IllegalArgumentException("ordenaçao invalida");
+                throw new IllegalArgumentException("Erro ao alterar ordem: "
+                        + "Ordem invalida");
         }
+    }
+    
+    /**
+     * Método para exibir o cenário ordenado de acordo com a última definição de
+     * ordenação.
+     * 
+     * @param cenario posicao do cenario no array.
+     * @return representação em string do cenário procurado.
+     */
+    public String exibirCenarioOrdenado(int cenario) {
+        val.validaNumeroMenorZero(cenario, "Erro na consulta de cenario "
+                + "ordenado: Cenario invalido");
+        
+        val.verificaCenarioEhValido(cenarios, cenario, "Erro na consulta de "
+                + "cenario ordenado");
+        
+        ArrayList<Cenario> cenarioOrdenado = cenarios;
+        Collections.sort(cenarioOrdenado, comparatorCenarios);
+        
+        return cenarioOrdenado.get(cenario - 1).toString();
     }
     
     /**

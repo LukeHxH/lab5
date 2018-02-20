@@ -3,8 +3,9 @@ package sistema;
 import java.util.Comparator;
 
 /**
- *
- * @author lucasmnf
+ * Representação de uma ordanação do cenário pela descrição.
+ * 
+ * @author Lucas de Medeiros Nunes Fernandes
  */
 public class ComparatorCenarioDescricao implements Comparator<Cenario> {
 

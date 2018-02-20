@@ -313,4 +313,201 @@ public class ControleTest {
         controle.cadastrarAposta(1, "Lucas", 1981, "vai acontecer", 0.1, 6000);
         controle.alterarSeguroValor(1, 1, 100);
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testAlteraApostaTaxa1() {
+        Controle controle = new Controle(100000, 0.01);
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(1, "Lucas", 1981, "vai acontecer");
+        controle.alterarSeguroTaxa(1, 1, 0.05);
+    }
+    
+    @Test
+    public void testAlteraApostaTaxa2() {
+        Controle controle = new Controle(100000, 0.01);
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(1, "Lucas", 1981, "vai acontecer", 100, 6000);
+        controle.alterarSeguroTaxa(1, 1, 0.05);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testOrdenacaoInvalida1() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.exibirCenarioOrdenado(0);
+    }
+    
+    @Test(expected = NoSuchElementException.class)
+    public void testOrdenacaoInvalida2() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.exibirCenarioOrdenado(2);
+    }
+    
+    @Test
+    public void testOrdenacaoInicial1() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(2, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(2, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(2, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(2, "Maciel", 2000, "n vai acontecer");
+        
+        assertEquals("1 - PUBG vai ganhar GOTY kkkkkkkkk. - Nao finalizado", 
+                controle.exibirCenarioOrdenado(1));
+    }
+    
+    @Test
+    public void testOrdenacaoInicial2() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(2, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(2, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(2, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(2, "Maciel", 2000, "n vai acontecer");
+        
+        assertEquals("2 - Flamengo vai passar da fase de grupos da "
+                + "libertadores. - Nao finalizado - R$ 10,00", 
+                controle.exibirCenarioOrdenado(2));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void alteraOrdenacaoInvalida() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(2, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(2, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(2, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(2, "Maciel", 2000, "n vai acontecer");
+        
+        controle.alterarOrdem("alo jujuba");
+    }
+    
+    @Test
+    public void alteraOrdenacao1() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(2, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(2, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(2, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(2, "Maciel", 2000, "n vai acontecer");
+        
+        controle.alterarOrdem("apostas");
+        assertEquals("1 - PUBG vai ganhar GOTY kkkkkkkkk. - Nao finalizado", 
+                controle.exibirCenarioOrdenado(1));
+    }
+    
+    @Test
+    public void alteraOrdenacao2() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(2, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(2, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(2, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(2, "Maciel", 2000, "n vai acontecer");
+        
+        controle.alterarOrdem("apostas");
+        assertEquals("2 - Flamengo vai passar da fase de grupos da "
+                + "libertadores. - Nao finalizado - R$ 10,00", 
+                controle.exibirCenarioOrdenado(2));
+    }
+    
+    @Test
+    public void alteraOrdenacao3() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(2, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(2, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(2, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(2, "Maciel", 2000, "n vai acontecer");
+        
+        controle.alterarOrdem("nome");
+        assertEquals("2 - Flamengo vai passar da fase de grupos da "
+                + "libertadores. - Nao finalizado - R$ 10,00", 
+                controle.exibirCenarioOrdenado(1));
+    }
+    
+    @Test
+    public void alteraOrdenacao4() {
+        Controle controle = new Controle(100000, 0.01);
+        
+        controle.cadastraCenario("PUBG vai ganhar GOTY kkkkkkkkk.");
+        controle.cadastrarAposta(1, "Lucas", 150000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Escobar", 1000, "n vai acontecer");
+        controle.cadastrarAposta(1, "Pablo", 690, "n vai acontecer");
+        controle.cadastrarAposta(1, "Lucas", 72000, "n vai acontecer");
+        
+        controle.cadastraCenario("Flamengo vai passar da fase de grupos da "
+                + "libertadores.", 1000);
+        controle.cadastrarAposta(2, "Lucas", 1981, "vai acontecer");
+        controle.cadastrarAposta(2, "Matheus", 6000, "vai acontecer", 1000, 900);
+        controle.cadastrarAposta(2, "José", 1000, "n vai acontecer", 0.1, 500);
+        controle.cadastrarAposta(2, "Maciel", 2000, "n vai acontecer");
+        
+        controle.alterarOrdem("nome");
+        assertEquals("1 - PUBG vai ganhar GOTY kkkkkkkkk. - Nao finalizado", 
+                controle.exibirCenarioOrdenado(2));
+    }
 }
